@@ -5,8 +5,8 @@ from matplotlib import pyplot as plt
 import numpy as np
 from PIL import Image
 
-from videotransforms.video_transforms import Compose, Resize, RandomCrop, RandomRotation, ColorJitter, Normalize
-from videotransforms.volume_transforms import ClipToTensor
+from torch_videovision.videotransforms.video_transforms import Compose, Resize, RandomCrop, RandomRotation, ColorJitter, Normalize
+from torch_videovision.videotransforms.volume_transforms import ClipToTensor
 
 img_path = 'data/cat/cat1.jpeg'
 

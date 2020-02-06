@@ -10,25 +10,25 @@ The idea was to produce the equivalent of [torchvision transforms](https://githu
 
 The basic paradigm is that dataloading should produce videoclips as a **list of PIL Images or numpy.ndarrays** (in format as read by opencv).
 
-Several transforms are then provided in [video_transforms](videotransforms/video_transforms.py).
+Several transforms are then provided in [video_transforms](torch_videovision/videotransforms/video_transforms.py).
 
 Each transform iterates on all the images in the list and applies the wanted augmentation.
 
 
 We then have to convert those inputs to torch tensors.
-This can be produced by the [volume_transform](videotransforms/volume_transforms.py).**ClipToTensor** class, which produces a video volume in format (n_channels, n_images, height, width) where n_channels = 3 in case of images.
+This can be produced by the [volume_transform](torch_videovision/videotransforms/volume_transforms.py).**ClipToTensor** class, which produces a video volume in format (n_channels, n_images, height, width) where n_channels = 3 in case of images.
 
 When randomness is involved, the same random parameters (crop size, scale size, rotation angle,...) are applied to all the frames.
 
 Transforms can be composed just as in torchvision with **video_transforms.Compose**.
 
-To quickly see a demo of the transformations, run `python testtransforms.py` 
+To quickly see a demo of the transformations, install the requirements `pip install -r requirements.txt` and `pip install - r test_requirements.txt` then run `python testtransforms.py` 
 
 This should produce something like the top image (this is a dummy clip for now, so the same image is repeated several times)
 
 # Advancement
 
-[video_transforms.py](videotransforms/video_transforms.py)
+[video_transforms.py](torch_videovision/videotransforms/video_transforms.py)
 - [x] Compose
 - [x] Resize
 - [x] CenterCrop
@@ -39,7 +39,7 @@ This should produce something like the top image (this is a dummy clip for now, 
 - [x] ColorJitter (acts on brightness, saturation, contrast and hue, only on PIL Images for now)
 - [ ] RandomResizedCrop
 
-[volume_transforms.py](videotransforms/volume_transforms.py)
+[volume_transforms.py](torch_videovision/videotransforms/volume_transforms.py)
 - [x] ClipToTensor
 
 
@@ -49,17 +49,17 @@ This should produce something like the top image (this is a dummy clip for now, 
 
 ## Install torch_videovision
 ```shell
-git clone https://github.com/hassony2/torch_videovision
-export PYTHONPATH=$PYTHONPATH:path/to/torch_videovision
+pip install git+https://github.com/hassony2/torch_videovision.git
 ```
 
 
 ## In your python script
 ```python
-from videotransforms import video_transforms, volume_transforms
+
+from torch_videovision.videotransforms import video_transforms, volume_transforms
 
 video_transform_list = [video_transforms.RandomRotation(30),
-			video_transforms.RandomCrop((200, 200))
+			video_transforms.RandomCrop((200, 200)),
 			volume_transforms.ClipToTensor()]
 transforms = video_transforms.Compose(video_transform_list)
 ```
